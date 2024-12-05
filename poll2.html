@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width">
+    <title>2-Option Poll</title>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Helvetica, Arial, sans-serif;
+            padding: 10px;
+            background: #fff;
+            -webkit-text-size-adjust: 100%;
+            max-width: 720px;
+            margin: 0 auto;
+        }
+
+        .container {
+            width: 680px;
+            margin: 0 auto;
+            padding: 10px;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin: 0 0 20px 0;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin: 0 0 15px 0;
+            text-align: center;
+        }
+
+        .vote-button {
+            display: block;
+            width: 100%;
+            height: 80px;
+            margin: 10px 0;
+            border: 3px solid #000;
+            background: #fff;
+            font-size: 28px;
+            font-weight: bold;
+            -webkit-appearance: none;
+            border-radius: 0;
+        }
+
+        .vote-button:active {
+            background: #000;
+            color: #fff;
+        }
+
+        .results {
+            margin-top: 20px;
+            border-top: 3px solid #000;
+            padding-top: 15px;
+        }
+
+        .option-result {
+            margin: 15px 0;
+        }
+
+        .option-label {
+            margin-bottom: 8px;
+            font-size: 24px;
+        }
+
+        .option-count {
+            float: right;
+        }
+
+        .progress-bar {
+            height: 50px;
+            border: 3px solid #000;
+            background: #fff;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 50px;
+            background: #000;
+            width: 0;
+        }
+
+        .total-votes {
+            text-align: center;
+            margin: 20px 0;
+            font-size: 24px;
+        }
+
+        .qr-section {
+            margin-top: 25px;
+            padding: 15px;
+            border: 3px solid #000;
+            text-align: center;
+        }
+
+        .qr-image {
+            width: 200px;
+            height: 200px;
+            margin: 15px auto;
+        }
+
+        .clearfix:after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Which option do you prefer?</h1>
+        
+        <div id="poll">
+            <button class="vote-button" onclick="voteLegacy(0)">Option A</button>
+            <button class="vote-button" onclick="voteLegacy(1)">Option B</button>
+        </div>
+
+        <div class="results">
+            <div class="option-result">
+                <div class="option-label clearfix">
+                    Option A
+                    <span class="option-count">(<span id="count0">0</span> votes)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bar0"></div>
+                </div>
+            </div>
+            <div class="option-result">
+                <div class="option-label clearfix">
+                    Option B
+                    <span class="option-count">(<span id="count1">0</span> votes)</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="bar1"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="total-votes">Total votes: <span id="total">0</span></div>
+
+        <div class="qr-section">
+            <h2>Let's Connect</h2>
+            <img class="qr-image" src="/qr.jpg" alt="QR Code">
+        </div>
+    </div>
+
+    <script type="text/javascript">
+        var votes = [0, 0];
+        
+        function voteLegacy(index) {
+            votes[index] = votes[index] + 1;
+            updateResultsLegacy();
+        }
+
+        function updateResultsLegacy() {
+            var total = 0;
+            for (var i = 0; i < votes.length; i++) {
+                total = total + votes[i];
+            }
+            
+            document.getElementById('total').innerHTML = total;
+
+            for (var i = 0; i < votes.length; i++) {
+                var percentage = total === 0 ? 0 : (votes[i] / total * 100);
+                document.getElementById('bar' + i).style.width = percentage + '%';
+                document.getElementById('count' + i).innerHTML = votes[i];
+            }
+        }
+    </script>
+</body>
+</html>
